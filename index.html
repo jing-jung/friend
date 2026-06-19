@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>👑 여왕의 퀘스트</title>
+    <meta name="description" content="여왕의 5가지 시련을 통과하라! 8비트 RPG 스타일 웹 게임">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+KR:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="pixel-sun" onclick="resetGame()">☀️</div>
+    <div id="pixel-bg">
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="cloud cloud-4"></div>
+        <div class="cloud cloud-5"></div>
+        <div class="pixel-bird bird-1"></div>
+        <div class="pixel-bird bird-2"></div>
+        <div class="pixel-bird bird-3"></div>
+        <div class="mountain mountain-1"></div>
+        <div class="mountain mountain-2"></div>
+        <div class="mountain mountain-3"></div>
+        <div class="grass">
+            <div class="grass-detail"></div>
+            <span class="deco deco-tree1">🌲</span>
+            <span class="deco deco-tree2">🌳</span>
+            <span class="deco deco-tree3">🌲</span>
+            <span class="deco deco-tree4">🌳</span>
+            <span class="deco deco-flower1">🌻</span>
+            <span class="deco deco-flower2">🌷</span>
+            <span class="deco deco-flower3">🌸</span>
+            <span class="deco deco-flower4">🌼</span>
+            <span class="deco deco-flower5">💐</span>
+            <span class="deco deco-bush1">🌿</span>
+            <span class="deco deco-bush2">☘️</span>
+        </div>
+        <div class="retro-char char-kirby"><img src="assets/kirby.png" alt="Kirby"></div>
+        <div class="retro-char char-link"><img src="assets/link.png" alt="Link"></div>
+        <div class="retro-char char-mario"><img src="assets/mario.png" alt="Mario"></div>
+        <div class="retro-char char-frieren"><img src="assets/frieren.png" alt="Frieren"></div>
+        <div class="retro-char char-owl"><img src="assets/owl.png" alt="Owl"></div>
+        <div class="retro-char char-neverland"><img src="assets/neverland.png" alt="Neverland"></div>
+        <div class="retro-char char-idle-text">(G)I-DLE</div>
+    </div>
+
+    <canvas id="fireworks-canvas"></canvas>
+
+    <div id="progress-bar">
+        <div class="progress-track">
+            <div class="progress-step active" data-stage="1">
+                <div class="step-box">1</div>
+                <span class="step-name">퀴즈</span>
+            </div>
+            <div class="progress-connector" data-line="1"></div>
+            <div class="progress-step" data-stage="2">
+                <div class="step-box">2</div>
+                <span class="step-name">금고</span>
+            </div>
+            <div class="progress-connector" data-line="2"></div>
+            <div class="progress-step" data-stage="3">
+                <div class="step-box">3</div>
+                <span class="step-name">필사</span>
+            </div>
+            <div class="progress-connector" data-line="3"></div>
+            <div class="progress-step" data-stage="4">
+                <div class="step-box">4</div>
+                <span class="step-name">추리</span>
+            </div>
+            <div class="progress-connector" data-line="4"></div>
+            <div class="progress-step" data-stage="5">
+                <div class="step-box">5</div>
+                <span class="step-name">보상</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="intro-screen" class="screen active">
+        <div class="intro-content">
+            <div class="pixel-castle">🏰</div>
+            <h1 class="game-title">QUEEN'S<br>QUEST</h1>
+            <p class="game-subtitle">생일편지가 뭐길래..</p>
+            <div class="dialog-box intro-dialog">
+                <div class="dialog-name">👑 여왕</div>
+                <div class="dialog-text" id="intro-dialog-text"></div>
+            </div>
+            <div class="quest-list">
+                <div class="quest-item"><span class="quest-icon">⚔️</span> 시련 1 — 여왕의 취향 테스트</div>
+                <div class="quest-item"><span class="quest-icon">🔐</span> 시련 2 — 비밀 금고 암호 해독</div>
+                <div class="quest-item"><span class="quest-icon">📜</span> 시련 3 — 여왕의 칙령 필사</div>
+                <div class="quest-item"><span class="quest-icon">🔮</span> 시련 4 — 심리 추리</div>
+                <div class="quest-item"><span class="quest-icon">🎁</span> 시련 5 — ???</div>
+            </div>
+            <button class="pixel-btn pixel-btn-primary" onclick="startGame()">🗡️ 모험 시작!</button>
+        </div>
+    </div>
+
+    <div id="stage-1" class="screen">
+        <div class="stage-container">
+            <div class="stage-badge">⚔️ 시련 1</div>
+            <h2 class="stage-title">여왕의 취향 테스트</h2>
+            <div class="dialog-box">
+                <div class="dialog-name">👑 여왕</div>
+                <div class="dialog-text">본 여왕에 대해 얼마나 알고 있는지 시험해보겠노라! 5문제를 모두 맞춰야 통과할 수 있느니라!</div>
+            </div>
+            <div class="quiz-progress-bar">
+                <span class="pixel-label">문제</span>
+                <span id="quiz-current" class="pixel-number">1</span>
+                <span class="pixel-label">/</span>
+                <span id="quiz-total" class="pixel-number">5</span>
+            </div>
+            <div id="quiz-container" class="game-panel"></div>
+            <div id="quiz-result" class="game-panel" style="display:none;">
+                <div id="quiz-result-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="stage-2" class="screen">
+        <div class="stage-container">
+            <div class="stage-badge">🔐 시련 2</div>
+            <h2 class="stage-title">비밀 금고 암호 해독</h2>
+            <div class="dialog-box">
+                <div class="dialog-name">👑 여왕</div>
+                <div class="dialog-text">여왕의 금고에 걸린 암호를 풀어보아라! 스도쿠를 완성하면 금고가 열리느니라!</div>
+            </div>
+            <div class="sudoku-toolbar">
+                <div class="toolbar-item hint-counter">💡 <span id="hints-left">3</span></div>
+                <button class="pixel-btn-sm" id="memo-btn" onclick="toggleMemo()">📝 메모</button>
+                <button class="pixel-btn-sm" id="hint-btn" onclick="useHint()">💡 힌트</button>
+                <button class="pixel-btn-sm" id="erase-btn" onclick="eraseCell()">🗑️ 지우기</button>
+            </div>
+            <div id="sudoku-board" class="sudoku-board"></div>
+            <div id="sudoku-numpad" class="sudoku-numpad"></div>
+            <div id="sudoku-message" class="sudoku-message"></div>
+            <button class="pixel-btn pixel-btn-primary" onclick="completeStage2()">🔓 암호 해독 완료!</button>
+        </div>
+    </div>
+
+    <div id="stage-3" class="screen">
+        <div class="stage-container">
+            <div class="stage-badge">📜 시련 3</div>
+            <h2 class="stage-title">여왕의 칙령 필사</h2>
+            <div class="dialog-box">
+                <div class="dialog-name">👑 여왕</div>
+                <div class="dialog-text">여왕의 칙령을 정확히 필사하여라! 제한 시간은 3분이니라. 한 글자라도 틀리면 안 되느니라!</div>
+            </div>
+            <div class="typing-status-bar">
+                <div class="timer-box">
+                    <span class="timer-label">⏳ 남은 시간</span>
+                    <span id="timer-value" class="timer-digits">3:00</span>
+                </div>
+                <div class="typing-progress-box">
+                    <span class="timer-label">📜 진행</span>
+                    <span id="typing-current" class="timer-digits">1</span>
+                    <span class="timer-label">/</span>
+                    <span id="typing-total" class="timer-digits">7</span>
+                </div>
+            </div>
+            <div class="game-panel typing-panel" id="typing-panel">
+                <div class="typing-source-label" id="typing-label"></div>
+                <div class="typing-display" id="typing-display"></div>
+                <textarea id="typing-input" class="typing-input" placeholder="여기에 타이핑하세요..." spellcheck="false"
+                    autocomplete="off" autocorrect="off" autocapitalize="off"></textarea>
+            </div>
+            <div id="typing-result" class="game-panel" style="display:none;">
+                <div id="typing-result-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="stage-4" class="screen">
+        <div class="stage-container">
+            <div class="stage-badge">🔮 시련 4</div>
+            <h2 class="stage-title">탐정 심리 추리</h2>
+            <div class="dialog-box">
+                <div class="dialog-name">👑 여왕</div>
+                <div class="dialog-text">사람의 마음을 읽는 능력을 보여다오! 모든 문제를 맞춰야 통과할 수 있느니라!</div>
+            </div>
+            <div class="quiz-progress-bar">
+                <span class="pixel-label">문제</span>
+                <span id="detective-current" class="pixel-number">1</span>
+                <span class="pixel-label">/</span>
+                <span id="detective-total" class="pixel-number">4</span>
+            </div>
+            <div id="detective-container" class="game-panel"></div>
+            <div id="detective-result" class="game-panel" style="display:none;">
+                <div id="detective-result-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="stage-5" class="screen">
+        <div class="stage5-blur-overlay"></div>
+        <div class="trumpet trumpet-left">🎺</div>
+        <div class="trumpet trumpet-right">🎺</div>
+        <div class="letter-popup">
+            <div class="letter-crown">👑</div>
+            <h2 class="letter-title">🎂 여왕의 하사품 🎂</h2>
+            <div class="letter-scroll">
+                <div class="letter-body">
+                    <p>용감한 기사여,</p>
+                    <p>모든 시련을 통과하다니 정말 대단하구나!</p>
+                    <p>모든 문제의 답을 알고 있는 건<br>그만큼 우리가 가까운 사이라는 증거이니라.</p>
+                    <p>올해도 웃을 일만 가득하길,<br>행복한 일만 넘치길 바라노라.</p>
+                    <p>생일 진심으로 축하하노라! 🎉</p>
+                </div>
+                <div class="letter-signature">— 너의 여왕이 ❤️</div>
+            </div>
+            <button class="pixel-btn pixel-btn-primary" onclick="resetGame()" style="margin-top:20px;">🔄 처음부터 다시
+                하기</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
