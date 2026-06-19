@@ -22,7 +22,7 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     }
 
-    var introLines = '나의 편지를 받기위해 이정돈 해야지...ㅎㅇㅌ \n너 이거 하는 난이도보고 이후의 편지 난이도 정해진다\n말투는 ai가 해준거임 오해 ㄴㄴ\n고난을 거쳐서 받은 편지 얼마나 짜릿할까';
+    var introLines = '나의 편지를 받기위해 이정돈 해야지...ㅎㅇㅌ \n너 이거 하는 난이도보고 이후의 편지 난이도 정해진다\n말투는 ai가 해준거임 오해 ㄴㄴ\n고난을 거쳐서 받은 편지 얼마나 짜릿할까.....';
 
     function typewriterEffect(element, text, speed) {
         var i = 0;
@@ -1080,6 +1080,13 @@
         if (!actualPassword) {
             document.getElementById('gate-screen').style.display = 'none';
             initGame();
+        }
+
+        var letter = document.querySelector('.letter-popup');
+        if (letter) {
+            letter.addEventListener('contextmenu', function (e) {
+                e.preventDefault();
+            });
         }
     });
 })();
