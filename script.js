@@ -1054,9 +1054,9 @@
     };
 
     window.verifyGatePass = function () {
-        var input = document.getElementById('gate-pass-input').value;
+        var input = document.getElementById('gate-pass-input').value.trim();
         var error = document.getElementById('gate-error');
-        var actualPassword = (typeof GAME_PASSWORD !== 'undefined') ? GAME_PASSWORD : '';
+        var actualPassword = (typeof GAME_PASSWORD !== 'undefined') ? String(GAME_PASSWORD).trim() : '';
 
         if (input === actualPassword) {
             document.getElementById('gate-screen').style.display = 'none';
