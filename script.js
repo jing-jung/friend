@@ -42,8 +42,16 @@
     }
 
     var introEl = document.getElementById('intro-dialog-text');
-    if (introEl) {
-        typewriterEffect(introEl, introLines, 35);
+
+    function initGame() {
+        if (introEl) {
+            typewriterEffect(introEl, introLines, 35);
+        }
+        if (state.currentStage > 0) {
+            startGame();
+        } else {
+            showScreen('intro-screen');
+        }
     }
 
     var quizData = [
@@ -1045,7 +1053,33 @@
         }
     };
 
-    if (state.currentStage > 0) {
-        startGame();
-    }
+    window.verifyGatePass = function () {
+        var input = document.getElementById('gate-pass-input').value;
+        var error = document.getElementById('gate-error');
+        var actualPassword = (typeof GAME_PASSWORD !== 'undefined') ? GAME_PASSWORD : '';
+
+        if (input === actualPassword) {
+            document.getElementById('gate-screen').style.display = 'none';
+            initGame();
+        } else {
+            error.textContent = '❌ 암호가 틀렸노라! 올바른 비밀번호를 입력하여라!';
+            var card = document.querySelector('.gate-card');
+            card.style.animation = 'shake 0.4s ease';
+            setTimeout(function () { card.style.animation = ''; }, 400);
+        }
+    };
+
+    document.getElementById('gate-pass-input').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            verifyGatePass();
+        }
+    });
+
+    window.addEventListener('DOMContentLoaded', function () {
+        var actualPassword = (typeof GAME_PASSWORD !== 'undefined') ? GAME_PASSWORD : '';
+        if (!actualPassword) {
+            document.getElementById('gate-screen').style.display = 'none';
+            initGame();
+        }
+    });
 })();

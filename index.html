@@ -12,6 +12,7 @@
         href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+KR:wght@400;700;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="env-config.js"></script>
 </head>
 
 <body>
@@ -82,7 +83,20 @@
         </div>
     </div>
 
-    <div id="intro-screen" class="screen active">
+    <div id="gate-screen" class="gate-overlay">
+        <div class="gate-card">
+            <div class="letter-crown" style="font-size: 38px;">🔑</div>
+            <h2 class="gate-title">보안 인증 필요</h2>
+            <p class="gate-desc">여왕의 퀘스트에 도전하려면<br>암호를 입력하여 자신을 증명하시오!</p>
+            <div class="gate-form">
+                <input type="password" id="gate-pass-input" placeholder="여기에 암호를 입력..." spellcheck="false" autocomplete="off">
+                <button class="pixel-btn pixel-btn-primary" onclick="verifyGatePass()">🔓 확인</button>
+            </div>
+            <div id="gate-error" class="gate-error-msg"></div>
+        </div>
+    </div>
+
+    <div id="intro-screen" class="screen">
         <div class="intro-content">
             <div class="pixel-castle">🏰</div>
             <h1 class="game-title">QUEEN'S<br>QUEST</h1>
